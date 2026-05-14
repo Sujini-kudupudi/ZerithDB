@@ -3,6 +3,8 @@ import { program } from "commander";
 import chalk from "chalk";
 import { initCommand } from "./commands/init.js";
 import { signalCommand } from "./commands/signal.js";
+import { lintCommand } from "./commands/lint.js";
+import { formatCommand } from "./commands/format.js";
 
 const VERSION = "0.1.0";
 
@@ -35,5 +37,15 @@ program
   .description("Start a local WebSocket signaling server for development")
   .option("-p, --port <port>", "Port to listen on", "4000")
   .action(signalCommand);
+
+program
+  .command("lint [schema-path]")
+  .description("Lint the db schema for anti-patterns and missing indexes")
+  .action(lintCommand);
+
+program
+  .command("format [schema-path]")
+  .description("Format the db schema using Prettier")
+  .action(formatCommand);
 
 program.parse(process.argv);
