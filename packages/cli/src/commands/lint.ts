@@ -12,8 +12,8 @@ export async function lintCommand(schemaPath?: string) {
     let content: string;
     try {
       content = await fs.readFile(targetPath, "utf-8");
-    } catch (err: any) {
-      if (err.code === "ENOENT") {
+    } catch (err: unknown) {
+      if (err instanceof Error && "code" in err && (err as any).code === "ENOENT") {
         spinner.fail(
           chalk.red(`Schema file not found at ${targetPath}. Please provide a valid schema file.`)
         );

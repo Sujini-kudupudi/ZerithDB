@@ -19,13 +19,13 @@ export async function formatCommand(schemaPath?: string) {
     try {
       await execa("npx", ["prettier", "--write", targetPath]);
       spinner.succeed(chalk.green("Schema formatted successfully."));
-    } catch (err: any) {
+    } catch (err: unknown) {
       spinner.fail(
         chalk.red(
           "Prettier formatting failed. Is prettier installed and accessible in the environment?"
         )
       );
-      console.error(err.message || err);
+      console.error(err instanceof Error ? err.message : err);
       process.exit(1);
     }
   } catch (err) {
